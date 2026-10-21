@@ -1,0 +1,20 @@
+// Configurazione Firebase Web.
+// 1. Genera questo file con FlutterFire (`flutterfire configure`), oppure
+// 2. Copia questo file in 'lib/firebase_options.dart' e inserisci le credenziali Web del tuo progetto Firebase.
+
+import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
+
+class DefaultFirebaseOptions {
+  static FirebaseOptions get currentPlatform {
+    return web;
+  }
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'INSERISCI_API_KEY_WEB',
+    appId: '1:000000000000:web:0000000000000000000000',
+    messagingSenderId: '000000000000',
+    projectId: 'tuo-progetto-firebase',
+    authDomain: 'tuo-progetto-firebase.firebaseapp.com',
+    storageBucket: 'tuo-progetto-firebase.firebasestorage.app',
+  );
+}
