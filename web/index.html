@@ -7,8 +7,8 @@
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="Money Manager - Gestione saldi, entrate e uscite in cloud">
 
-  <!-- Viewport ottimizzato per iPhone (Notch / Dynamic Island + blocco zoom accidentale sugli input) -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <!-- Viewport ottimizzato per iOS & Android PWA (blocco zoom, safe-area e ridimensionamento pulito tastiera) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
 
   <!-- Colore barra di stato Safari & Android -->
   <meta name="theme-color" content="#0F172A">
@@ -16,7 +16,8 @@
   <!-- iOS PWA Meta Tags ("Aggiungi alla schermata Home") -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Impostato a 'default' per evitare il bug di disallineamento dei tap (offset 44-59px) causato da black-translucent su iOS standalone -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Money Manager">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
@@ -29,18 +30,37 @@
 
   <style>
     html, body {
-      background-color: #0F172A;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
       margin: 0;
       padding: 0;
-      height: 100%;
-      width: 100%;
       overflow: hidden;
+      background-color: #0F172A;
       -webkit-touch-callout: none;
       -webkit-user-select: none;
       user-select: none;
-      overscroll-behavior-y: none;
+      touch-action: manipulation;
+      overscroll-behavior: none;
     }
   </style>
+
+  <script>
+    // Impedisce lo scorrimento o rimbalzo accidentale del viewport su iOS Safari / PWA standalone
+    window.addEventListener('scroll', function() {
+      if (window.scrollX !== 0 || window.scrollY !== 0) {
+        window.scrollTo(0, 0);
+      }
+    }, { passive: true });
+
+    document.addEventListener('focusout', function() {
+      window.scrollTo(0, 0);
+    });
+  </script>
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>
